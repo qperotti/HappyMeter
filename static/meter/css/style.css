@@ -1,0 +1,20 @@
+       
+.page-header p { overflow: hidden; }
+.page-header p a { width: 200px; text-align: center;}
+.code { height: 500px; overflow: scroll; zoom: .84;}
+* { font-family: "source-sans-pro";}
+.heading { font-size: 140px; line-height: 300px;}
+.head, .examples, .docs { text-align: center; }
+code,pre, pre span { text-align: left; font-family: monospace; font-weight: normal; font-size: medium; }
+.head ul { list-style-type: none;}
+.map { position: relative; margin: 0 auto; width: 750px; height: 500px;}
+.tall { height: 750px; width: 550px; }
+.examples h3 { margin-bottom: 0; }
+.options { position: relative; overflow:hidden; max-height: 21px; -webkit-transition: max-height 250ms ease-in; transition: max-height 250ms ease-in; -moz-transition: max-height 250ms ease-in; }
+.options pre { margin-top: 10px; }
+.options:hover { background-color: #DDD; cursor: pointer; }
+.options pre:hover { cursor: default;}
+.open { max-height: 5000px !important; }
+.options:after {content: "(Click to toggle code) ↓"; color: #666; float: right; position: absolute; right: 10px; top: 10px; }
+#footer { padding: 10px 0; text-align: center; }
+sup.new { color: red; }

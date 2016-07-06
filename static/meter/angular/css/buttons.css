@@ -1,0 +1,31 @@
+.btn1 {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 125.26);
+    color : rgb(49, 46, 46);
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+    font-size: 10px;
+    min-width: 44px;
+}
+
+.btn2 {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    color : rgb(49, 46, 46);
+    background-color: white;
+    color: grey;
+        font-size: 10px;
+    min-width: 44px;
+
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
