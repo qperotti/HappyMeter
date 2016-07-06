@@ -104,7 +104,7 @@ def ScoreChartJson(request, word, state):
 
 	if(state=='overall'):
 		chart_dict['xAxis'] = {'categories' : state_xAxis}
-		chart_dict['series'] = [{'name' : 'Overall', 'data' : state_score, 'color' : 'black'}]
+		chart_dict['series'] = [{'name' : 'Overall', 'data' : state_score, 'color' : '#008cba'}]
 	else:
 		chart_dict['series'] = ({'name' : state, 'data' : state_score})
 
@@ -137,7 +137,7 @@ def RecurrenceChartJson(request, word, state):
 
 	if(state=='overall'):
 		chart_dict['xAxis'] = {'categories' : state_xAxis}
-		chart_dict['series'] = [{'name' : 'Overall', 'data' : state_recurrence, 'color' : 'black'}]
+		chart_dict['series'] = [{'name' : 'Overall', 'data' : state_recurrence, 'color' : '#008cba'}]
 	else:
 		chart_dict['series'] = ({'name' : state, 'data' : state_recurrence})
 

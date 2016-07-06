@@ -12,7 +12,6 @@ app.factory('chartdata', ['$http', function ($http) {
         }).error(function(err) { 
             return err; 
         }); 
-
   	}
   }
 

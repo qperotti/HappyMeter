@@ -1,26 +1,21 @@
-app.directive('chart', function($log){
+app.directive('chart', function($log) {
 
 
-	return{
+	return {
 		restrict: 'E',
-		scope:{
+		scope: {
 			data: '='
 		},
-		link: function link(scope, element, attr){
-		    // put D3 code here
+		link: function link(scope, element, attr) {
+			// put D3 code here
 
-			scope.$watch('data',function(data){
+			scope.$watch('data', function(data) {
 				Highcharts.chart(element[0], scope.data);
 				Highcharts.colorCounter = 2;
 				Highcharts.symbolCounter = 2;
-			},true);
-			
+			}, true);
 		}
 	}
-
-
-
 });
-
 
 

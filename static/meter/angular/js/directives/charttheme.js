@@ -1,20 +1,26 @@
  // Load the fonts
-  Highcharts.createElement('link', {
-     href: 'https://fonts.googleapis.com/css?family=Unica+One',
-     rel: 'stylesheet',
-     type: 'text/css'
-  }, null, document.getElementsByTagName('head')[0]);
+ Highcharts.createElement('link', {
+   href: 'https://fonts.googleapis.com/css?family=Unica+One',
+   rel: 'stylesheet',
+   type: 'text/css'
+ }, null, document.getElementsByTagName('head')[0]);
 
-Highcharts.theme = {
+ Highcharts.theme = {
 
 
-  
+
 
    colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
-      "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+      "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"
+   ],
    chart: {
       backgroundColor: {
-         linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+         linearGradient: {
+            x1: 0,
+            y1: 0,
+            x2: 1,
+            y2: 1
+         },
          stops: [
             [0, '#2a2a2b'],
             [1, '#3e3e40']
@@ -206,8 +212,8 @@ Highcharts.theme = {
    textColor: '#C0C0C0',
    contrastTextColor: '#F0F0F3',
    maskColor: 'rgba(255,255,255,0.3)'
-};
+ };
 
 
-// Apply the theme
-Highcharts.setOptions(Highcharts.theme);
+ // Apply the theme
+ Highcharts.setOptions(Highcharts.theme);

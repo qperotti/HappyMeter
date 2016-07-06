@@ -1,64 +1,44 @@
- <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/#/">HappyMeter</a>
+            </button>
+            <a class="navbar-brand" href="/#/">HappyMeter</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-           
         </div>
-      </div>
-    </nav>
-
-
-<center>
+    </div>
+</nav>
+<div class="row" align="center">
+    <h1 class="text-center heading">{{word}}</h1>
+</div>
+<div class="row" align="center">
+    <datamap map=datamap></datamap>
+</div>
+<br><br>
 <div class="row">
-  	 <h1 class="text-center heading">{{word}}</h1>
+    <div class="col-md-12 col-md-offset-2">
+        ⁠⁠⁠⁠
+        <div ng-repeat="state in usStates" ng-if="$index % 4 == 0" class="row">
+            <!-- purria de botones acortada -->
+            <md-button class="col-md-2 col-md-offset-2" ng-if="usStates.length > ($index)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index].abbr)">{{usStates[$index].name}}</md-button>
+            <md-button class="col-md-2" ng-if="usStates.length > ($index + 1)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+1].abbr)">{{usStates[$index + 1].name}}</md-button>
+            <md-button class="col-md-2" ng-if="usStates.length > ($index + 2)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+2].abbr)">{{usStates[$index + 2].name}}</md-button>
+            <md-button class="col-md-2" ng-if="usStates.length > ($index + 3)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+3].abbr)">{{usStates[$index + 3].name}}</md-button>
+        </div>
+    </div>
 </div>
-</center>
-
-
-<div class="row">
-
-
-
-  	<center> <datamap map=datamap></datamap> </center>
-
+<br><br>
+<br><br>
+<div class="row" align="center">
+    <chart data="scoreChart" style="min-width: 1000px; height: 400px; margin: 0 auto"> Placeholder for generic chart</chart>
+    <br><br>
+    <br><br>
+    <chart data="recurrenceChart" style="min-width: 1000px; height: 400px; margin: 0 auto"> Placeholder for generic chart</chart>
 </div>
-
-
-
-
-
-<br><br>
-
-<div ng-repeat="state in usStates" ng-if="$index % 5 == 0" class="row">
-
-    	<md-button class="col-md-2 col-md-offset-2" ng-if="usStates.length > ($index)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index].abbr)">{{usStates[$index].name}}</md-button>
-	    <md-button class="col-md-2" ng-if="usStates.length > ($index + 1)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+1].abbr)">{{usStates[$index + 1].name}}</md-button>
-	    <md-button class="col-md-2" ng-if="usStates.length > ($index + 2)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+2].abbr)">{{usStates[$index + 2].name}}</md-button>
-	    <md-button class="col-md-2" ng-if="usStates.length > ($index + 3)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+3].abbr)">{{usStates[$index + 3].name}}</md-button>
-	    <md-button class="col-md-2" ng-if="usStates.length > ($index + 4)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+4].abbr)">{{usStates[$index + 4].name}}</md-button>
-</div>
-
-
-<br><br>
-<br><br>
-
-<center>
-
-<chart data="scoreChart" style="min-width: 1000px; height: 400px; margin: 0 auto"> Placeholder for generic chart</chart>
-
-<br><br>
-<br><br>
-
-<chart data="recurrenceChart" style="min-width: 1000px; height: 400px; margin: 0 auto"> Placeholder for generic chart</chart>
-
-</center>
 <br><br>
 <br><br>

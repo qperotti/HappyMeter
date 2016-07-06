@@ -1,9 +1,8 @@
-       
+ 
 .page-header p { overflow: hidden; }
 .page-header p a { width: 200px; text-align: center;}
 .code { height: 500px; overflow: scroll; zoom: .84;}
-* { font-family: "source-sans-pro";}
-.heading { font-size: 140px; line-height: 300px;}
+.heading { font-size: 90px; line-height: 200px;}
 .head, .examples, .docs { text-align: center; }
 code,pre, pre span { text-align: left; font-family: monospace; font-weight: normal; font-size: medium; }
 .head ul { list-style-type: none;}
@@ -18,3 +17,18 @@ code,pre, pre span { text-align: left; font-family: monospace; font-weight: norm
 .options:after {content: "(Click to toggle code) ↓"; color: #666; float: right; position: absolute; right: 10px; top: 10px; }
 #footer { padding: 10px 0; text-align: center; }
 sup.new { color: red; }
+
+body{
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.navbar-inverse {
+	background-image:none;
+    background-color: #008cba;
+    border-color: #006687;
+}
+
+.jumbotron {
+    background-color: transparent;
+}
