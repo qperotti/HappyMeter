@@ -9,7 +9,7 @@ app.config(function ($routeProvider) {
       controller: 'homeController', 
       templateUrl: '/static/meter/angular/views/home.html' 
     }) 
-    .when('/:word/', { 
+    .when('/:word/:num', { 
       controller: 'DisplayController', 
       templateUrl: '/static/meter/angular/views/display.html' 
     })

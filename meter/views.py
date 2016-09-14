@@ -25,7 +25,6 @@ from django.core import serializers
 
 import urllib
 
-
 ####################################################
 #################### CUSTOM API ####################
 ####################################################
@@ -54,12 +53,17 @@ def StatesJson(request, word):
 	states = State.objects.filter(word__word=word)
 	
 	## Calculate subgrups with jenks
-	scores = list()
-	for state in states:
-		scores.append(state.score)
-	scores_jenks = jenks(scores,3)
-	negative = float(scores_jenks[1])
-	positive = float(scores_jenks[2])
+	if len(states) >= 3:
+		scores = list()
+		for state in states:
+			scores.append(state.score)
+		scores_jenks = jenks(scores,3)
+		negative = float(scores_jenks[1])
+		positive = float(scores_jenks[2])
+	else:
+		# We force to be neutral
+		negative = 1
+		positive = 10
 
 
 	## Prepare the dict
@@ -82,7 +86,7 @@ def StatesJson(request, word):
 ######################################################################
 
 # RETURN A JSON WITH THE SCORE CHART DATA
-def ScoreChartJson(request, word, state):
+def ScoreChartJson(request, word, state, num):
 
 	word = urllib.unquote(word);
 	
@@ -94,11 +98,20 @@ def ScoreChartJson(request, word, state):
 	else:
 		dates = Date.objects.filter(state__state=state).filter(state__word__word=word)
 
+	num = int(num)
+	first = 31 * (num-1)
+	last = 31 * num
+
+	if last > len(dates):
+		first = len(dates)-31
+		last = len(dates)
+
+	dates = reversed(dates[first:last])
 
 
 	for date in dates:
-		state_score.insert(0, date.score)
-		state_xAxis.insert(0, date.date.strftime('%m-%d-%Y'))
+		state_score.append(date.score)
+		state_xAxis.append(date.date.strftime('%m-%d-%Y'))
 
 	chart_dict = dict()
 
@@ -115,7 +128,7 @@ def ScoreChartJson(request, word, state):
 ######################################################################
 
 #RETURN A JSON WITH THE RECURRENCE CHART DATA
-def RecurrenceChartJson(request, word, state):
+def RecurrenceChartJson(request, word, state, num):
 
 	word = urllib.unquote(word);
 	
@@ -127,11 +140,21 @@ def RecurrenceChartJson(request, word, state):
 	else:
 		dates = Date.objects.filter(state__state=state).filter(state__word__word=word)
 
+	num = int(num)
+	first = 31 * (num-1)
+	last = 31 * num
+
+	if last > len(dates):
+		first = len(dates)-31
+		last = len(dates)
+
+	dates = reversed(dates[first:last])
+
 
 
 	for date in dates:
-		state_recurrence.insert(0, date.recurrence)
-		state_xAxis.insert(0, date.date.strftime('%m-%d-%Y'))
+		state_recurrence.append(date.recurrence)
+		state_xAxis.append(date.date.strftime('%m-%d-%Y'))
 
 	chart_dict = dict()
 
