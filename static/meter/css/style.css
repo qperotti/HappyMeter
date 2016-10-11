@@ -1,34 +1,83 @@
  
-.page-header p { overflow: hidden; }
-.page-header p a { width: 200px; text-align: center;}
-.code { height: 500px; overflow: scroll; zoom: .84;}
-.heading { font-size: 90px; line-height: 200px;}
-.head, .examples, .docs { text-align: center; }
-code,pre, pre span { text-align: left; font-family: monospace; font-weight: normal; font-size: medium; }
-.head ul { list-style-type: none;}
-.map { position: relative; margin: 0 auto; width: 750px; height: 500px;}
-.tall { height: 750px; width: 550px; }
-.examples h3 { margin-bottom: 0; }
-.options { position: relative; overflow:hidden; max-height: 21px; -webkit-transition: max-height 250ms ease-in; transition: max-height 250ms ease-in; -moz-transition: max-height 250ms ease-in; }
-.options pre { margin-top: 10px; }
-.options:hover { background-color: #DDD; cursor: pointer; }
-.options pre:hover { cursor: default;}
-.open { max-height: 5000px !important; }
-.options:after {content: "(Click to toggle code) ↓"; color: #666; float: right; position: absolute; right: 10px; top: 10px; }
-#footer { padding: 10px 0; text-align: center; }
-sup.new { color: red; }
+
+
+.heading { 
+	font-size: 90px; 
+	line-height: 200px;
+}
 
 body{
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: white;
 }
 
 .navbar-inverse {
 	background-image:none;
-    background-color: #008cba;
-    border-color: #006687;
+  background-color: #008cba;
+  border-color: #006687;
 }
 
-.jumbotron {
-    background-color: transparent;
+.search {
+	margin-top: 40px;
+	text-align:center;
 }
+
+.datamap{
+  text-align:center;
+}
+
+/* Charts*/
+.scoreChart {
+	margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+.recurrenceChart {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+
+.buttons {
+	margin-top: 60px;
+	margin-bottom: 0px;
+	text-align:center;
+}
+
+/* State Buttons*/
+.btn1 {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 60.26);
+}
+
+.btn2 {
+
+}
+
+.md-button {
+  padding: 0 6px 0 6px;
+  margin: 6px 8px 6px 8px;
+  min-width: 88px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration:none;
+  border: none;
+  outline: none;
+}
+
+
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+

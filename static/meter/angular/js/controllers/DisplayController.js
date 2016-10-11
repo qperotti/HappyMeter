@@ -2,8 +2,8 @@
 app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routeParams', '$location', '$http', '$log', function($scope, chartdata, datamap, $routeParams, $location, $http, $log ) {
 
     $scope.word = $routeParams.word;
-    $scope.num = $routeParams.num;
-    $scope.maxMonth = 3
+    $scope.num = 30;
+
 
     // DATA OF THE MAP CHART
 
@@ -12,7 +12,6 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
         options: {
         width: 1000,
         legendHeight: 60 // optionally set the padding for the legend
-
         },
         geographyConfig: {
         highlightBorderColor: '#000000',
@@ -20,9 +19,7 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
             return '<div class="hoverinfo">' + geography.properties.name + ' <br />' +  'Score: ' + data.score + ' <br />' +   data.fillKey +' ';
         },
         highlightBorderWidth: 3
-
         },
-
         fills: {
         'positive': '#2ecc71',
         'negative': '#e74c3c',
@@ -33,20 +30,13 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
         data: {}
     }
     $scope.datamap.options.staticGeoData = true;
-
-    $scope.datamapClick = {}
-
     datamap.getData($scope.word).success(function(data) {
         $scope.datamap.data=data;
+    });
 
-    });
-    datamap.getData($scope.word).success(function(data) {
-        $scope.datamapClick=data;
-    });
 
     
     // DATA OF THE SCORE CHART
-
     $scope.scoreChart= {
         title: {
             text: 'Score Chart',
@@ -65,16 +55,21 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
             verticalAlign: 'middle',
             borderWidth: 0
         },
+        series: [],
+        xAxis: {}
     };
-
-
-    
-    chartdata.getData($scope.word, "overall", "scorechart",$scope.num).success(function(data) {
-        angular.extend($scope.scoreChart, data)
+    $scope.scoreChartData = {};
+    $scope.scoreChartxAxis = {};
+    chartdata.getData($scope.word, "overall", "scorechart",3,'#008cba').success(function(data) {
+        $scope.scoreChartxAxis['xAxis'] = data.xAxis;
+        $scope.scoreChartData['overall'] = data.series;
+        $scope.scoreChart.xAxis = {categories: data.xAxis.categories.slice(data.xAxis.categories.length-30,data.xAxis.categories.length)};
+        $scope.scoreChart.series.push({name: data.series.name, data: data.series.data.slice(data.series.data.length-30,data.series.data.length), color: data.series.color});
+        console.log($scope.scoreChartData['overall']);
     });
 
-    // DATA OF THE RECURRENCE CHART
 
+    // DATA OF THE RECURRENCE CHART
     $scope.recurrenceChart= {
         title: {
             text: 'Recurrence Chart',
@@ -92,19 +87,23 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
             align: 'right',
             verticalAlign: 'middle',
             borderWidth: 0
-        }
+        },
+        series: [],
+        xAxis: {}
     };
-
-    chartdata.getData($scope.word, "overall", "recurrencechart", $scope.num).success(function(data) {
-        angular.extend($scope.recurrenceChart, data)
+    $scope.recurrenceChartData = {};
+    $scope.recurrenceChartxAxis = {};
+    chartdata.getData($scope.word, "overall", "recurrencechart", 3,'#008cba').success(function(data) {
+        $scope.recurrenceChartxAxis['xAxis'] = data.xAxis;
+        $scope.recurrenceChartData['overall'] = data.series;
+        $scope.recurrenceChart.xAxis = {categories: data.xAxis.categories.slice(data.xAxis.categories.length-30,data.xAxis.categories.length)};
+        $scope.recurrenceChart.series.push({name: data.series.name, data: data.series.data.slice(data.series.data.length-30,data.series.data.length), color: data.series.color});
     });
 
 
     // UPDATE STATES CHART
-
     $scope.total = 0;
-
-    $scope.colorsScore = [ //Stack of colors
+    $scope.chartColors = [ //Stack of colors
         '#2ecc71',
         '#f1c40f',
         '#16a085',
@@ -112,23 +111,38 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
         '#8e44ad',
         ]
 
-    $scope.colorsRecurrence = [ //Stack of colors
-        '#2ecc71',
-        '#f1c40f',
-        '#16a085',
-        '#e74c3c',
-        '#8e44ad',
-        ]
+    $scope.updatePag = function(numButton){
+        $scope.num = parseInt(numButton);
 
-    $scope.updatePag = function(actualNum,increment){
-        if ((parseInt($scope.num) + parseInt(increment)) >=1 && (parseInt($scope.num) + parseInt(increment)) <=$scope.maxMonth){ 
-            $scope.num = parseInt($scope.num) + parseInt(increment)
-            $location.path($scope.word + "/" + $scope.num);
+        // Indexs
+        var start = ($scope.scoreChartxAxis['xAxis'].categories.length - $scope.num) >= 0 ? ($scope.scoreChartxAxis['xAxis'].categories.length - $scope.num) : 0;
+        var end = $scope.scoreChartxAxis['xAxis'].categories.length;
+
+        console.log($scope.scoreChartxAxis['xAxis'].categories.slice(start,end));
+
+        // Change xAxis
+        $scope.scoreChart.xAxis = {categories: $scope.scoreChartxAxis['xAxis'].categories.slice(start,end)}; 
+        $scope.recurrenceChart.xAxis = {categories: $scope.recurrenceChartxAxis['xAxis'].categories.slice(start,end)}; 
+
+
+        $scope.scoreChart.series = [];
+        for( e in $scope.scoreChartData){
+            $scope.scoreChart.series.push({ name: $scope.scoreChartData[e].name, 
+                                            data: $scope.scoreChartData[e].data.slice(start,end), 
+                                            color: $scope.scoreChartData[e].color});
         }
+
+        $scope.recurrenceChart.series = [];
+        for( e in $scope.recurrenceChartData){
+            $scope.recurrenceChart.series.push({ name: $scope.recurrenceChartData[e].name, 
+                                                 data: $scope.recurrenceChartData[e].data.slice(start,end), 
+                                                 color: $scope.recurrenceChartData[e].color});
+        }
+        
+       
     }
 
     $scope.checkNUM = function(tt) {
-        console.log('asas')
         if($scope.total === 5){
             if(tt===true) return !tt;
             else return tt;
@@ -145,34 +159,38 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
                 //Update score chart
                 $scope.total--;
                 $scope.auxindex = getIndexOf($scope.scoreChart.series,abbr,'name')
-                $scope.colorsScore.push($scope.scoreChart.series[$scope.auxindex].color)
+                $scope.chartColors.push($scope.scoreChart.series[$scope.auxindex].color)
                 $scope.scoreChart.series.splice($scope.auxindex,1)
+                delete $scope.scoreChartData[abbr];
 
                 //Update recurrence chart
                 $scope.auxindex = getIndexOf($scope.recurrenceChart.series,abbr,'name')
-                $scope.colorsRecurrence.push($scope.recurrenceChart.series[$scope.auxindex].color)
                 $scope.recurrenceChart.series.splice($scope.auxindex,1)
+                delete $scope.recurrenceChartData[abbr];
             }
         }
         else {
             if($scope.total<5){ 
                 $scope.total++;
 
+                var start = ($scope.scoreChartxAxis['xAxis'].categories.length - $scope.num) >= 0 ? ($scope.scoreChartxAxis['xAxis'].categories.length - $scope.num) : 0;
+                var end = $scope.scoreChartxAxis['xAxis'].categories.length
+
                 //Update score chart
-                chartdata.getData($scope.word, abbr, "scorechart", $scope.num).success(function(data) {
-                    $scope.aux = data.series;
-                    $scope.aux['color'] = $scope.colorsScore[0];
-                    $scope.colorsScore.splice(0, 1);
-                    $scope.scoreChart.series.push( $scope.aux);
+                chartdata.getData($scope.word, abbr, "scorechart",3,$scope.chartColors[0]).success(function(data) {
+                    $scope.scoreChartData[abbr] = data.series;
+                    $scope.scoreChart.series.push({ name: data.series.name, 
+                                                    data: data.series.data.slice(start,end), color: data.series.color});
                 });
 
                 //Update recurrence chart
-                chartdata.getData($scope.word, abbr, "recurrencechart", $scope.num).success(function(data) {
-                    $scope.aux = data.series;
-                    $scope.aux['color'] = $scope.colorsRecurrence[0];
-                    $scope.colorsRecurrence.splice(0, 1);
-                    $scope.recurrenceChart.series.push( $scope.aux);
+                chartdata.getData($scope.word, abbr, "recurrencechart", 3,$scope.chartColors[0]).success(function(data) {
+                    $scope.recurrenceChartData[abbr] = data.series;
+                    $scope.recurrenceChart.series.push({name: data.series.name, 
+                                                        data: data.series.data.slice(start,end), 
+                                                        color: data.series.color});
                 });
+                $scope.chartColors.splice(0, 1);
             }
         }
     };
@@ -190,10 +208,7 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
     }
 
    
-
-
     // LIST OF US STATES
-
     $scope.usStates = [
         { name: 'ALABAMA', abbr: 'AL'},
         { name: 'ARIZONA', abbr: 'AZ'},
@@ -244,17 +259,9 @@ app.controller('DisplayController', ['$scope', 'chartdata', 'datamap', '$routePa
         { name: 'WEST VIRGINIA', abbr: 'WV'},
         { name: 'WISCONSIN', abbr: 'WI'},
         { name: 'WYOMING', abbr: 'WY' }
-];
-
-
-
-
-
+    ];
 
 }]);
-
-
-
 
 
 

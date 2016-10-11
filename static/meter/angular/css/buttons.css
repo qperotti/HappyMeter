@@ -6,11 +6,8 @@
 }
 
 .btn2 {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     color : rgb(49, 46, 46);
     background-color: white;
-    color: grey;
-
 }
 
 /* centered columns styles */
@@ -24,4 +21,30 @@
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
+}
+
+.md-button {
+  padding: 0 6px 0 6px;
+  margin: 6px 8px 6px 8px;
+  min-width: 88px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration:none;
+  border: none;
+  outline: none;
+}
+
+/*   CHART BUTTONS  */
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-primary {
+    color: black;
+    background-color: white;
+    border-color: #8c8c8c;
+
+}
+
+.btn.focus, .btn:focus {
+    color: black;
+    background-color: white;
 }

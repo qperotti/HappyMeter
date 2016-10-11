@@ -83,6 +83,7 @@ def StatesJson(request, word):
 
 	return HttpResponse(json.dumps(states_dict))
 
+
 ######################################################################
 
 # RETURN A JSON WITH THE SCORE CHART DATA
@@ -99,12 +100,15 @@ def ScoreChartJson(request, word, state, num):
 		dates = Date.objects.filter(state__state=state).filter(state__word__word=word)
 
 	num = int(num)
-	first = 31 * (num-1)
-	last = 31 * num
-
-	if last > len(dates):
-		first = len(dates)-31
+	first = 0
+	
+	if num <= 1:
+		last = 30 
+	elif num == 2:
+		last = 60
+	else:
 		last = len(dates)
+
 
 	dates = reversed(dates[first:last])
 
@@ -117,7 +121,7 @@ def ScoreChartJson(request, word, state, num):
 
 	if(state=='overall'):
 		chart_dict['xAxis'] = {'categories' : state_xAxis}
-		chart_dict['series'] = [{'name' : 'Overall', 'data' : state_score, 'color' : '#008cba'}]
+		chart_dict['series'] = ({'name' : 'Overall', 'data' : state_score , 'color' : '#008cba'})
 	else:
 		chart_dict['series'] = ({'name' : state, 'data' : state_score})
 
@@ -141,11 +145,13 @@ def RecurrenceChartJson(request, word, state, num):
 		dates = Date.objects.filter(state__state=state).filter(state__word__word=word)
 
 	num = int(num)
-	first = 31 * (num-1)
-	last = 31 * num
-
-	if last > len(dates):
-		first = len(dates)-31
+	first = 0
+	
+	if num <= 1:
+		last = 30 
+	elif num == 2:
+		last = 60
+	else:
 		last = len(dates)
 
 	dates = reversed(dates[first:last])
@@ -160,7 +166,7 @@ def RecurrenceChartJson(request, word, state, num):
 
 	if(state=='overall'):
 		chart_dict['xAxis'] = {'categories' : state_xAxis}
-		chart_dict['series'] = [{'name' : 'Overall', 'data' : state_recurrence, 'color' : '#008cba'}]
+		chart_dict['series'] = ({'name' : 'Overall', 'data' : state_recurrence, 'color' : '#008cba'})
 	else:
 		chart_dict['series'] = ({'name' : state, 'data' : state_recurrence})
 
