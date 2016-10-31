@@ -1,71 +1,104 @@
 
-<div class="row">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-wrapper">
+      <div class="container">
 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/#/">HappyMeter</a>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand brand-style" href="/#/">HappyMeter</a>
+                </div>
+
+                    
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="">About</a></li>
+                        <li><a href="">Research</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><search location="navbar" message="e.g. #debate2016"></search></li>
+                    </ul>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-            </div>
-       
-    </nav>
-    <div align="center">
-        <h1 class="text-center heading">{{word}}</h1>
+        </nav>
     </div>
 </div>
 
-<div class="row datamap">
-    <datamap map=datamap ></datamap>
-</div>
 
 
-<div class="row">
-    <div class="col-lg-10 col-lg-offset-1 col-md-12">
+<div class="container">
 
-        <div ng-repeat="state in usStates" ng-if="$index % 6 == 0" class="row">
-            <!-- purria de botones acortada -->
-            <div class="col-md-2 col-sm-4 col-xs-6 text-center">
-                <md-button ng-if="usStates.length > ($index)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index].abbr)">{{usStates[$index].name}}</md-button>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 text-center">
-                <md-button ng-if="usStates.length > ($index + 1)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+1].abbr)">{{usStates[$index + 1].name}}</md-button>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 text-center">
-                <md-button ng-if="usStates.length > ($index + 2)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+2].abbr)">{{usStates[$index + 2].name}}</md-button>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 text-center">
-                <md-button ng-if="usStates.length > ($index + 3)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+3].abbr)">{{usStates[$index + 3].name}}</md-button>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 text-center">
-                <md-button ng-if="usStates.length > ($index + 4)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+4].abbr)">{{usStates[$index + 4].name}}</md-button>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 text-center">
-                <md-button ng-if="usStates.length > ($index + 5)" ng-class="{'btn1' : toggled, 'btn2' : !toggled}" ng-click="toggled = checkNUM(toggled); updateChart(toggled,usStates[$index+5].abbr)">{{usStates[$index + 5].name}}</md-button>
-            </div>
+    <div class="row">
+        <div align="center">
+            <h1 class="text-center heading">{{word}}</h1>
+            <hr class="star-primary">
         </div>
     </div>
+
+
+    <div class="row">
+        <h1 class="text-center map-main-title">USA Happiness Map</h1>
+        <div class="map-container">
+            <datamap map=datamap ></datamap>
+        </div>
+    </div>
+
+    <div class="row block-container">
+        <h1 class="text-center main-title">USA Happiness Ranking</h1>
+            <ranking-state data="dataRanking" us-states="usStates"></ranking-state>
+    </div>
+
+
+
+    <div class="row">
+        <h1 class="text-center main-title">USA Happiness Charts</h1>
+    </div>
+
+
+    <div class="row chart-control">
+        <div class="col-md-6 col-sm-12 text-center">
+            <search-states selected-state="chartState"></search-states>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <md-radio-group class="buttons" layout="row" layout-align="center" ng-model="num">
+                <md-radio-button value="180" class="md-primary">6-Months</md-radio-button>
+                <md-radio-button value="90" class="md-primary">3-Months</md-radio-button>
+                <md-radio-button value="30" class="md-primary">1-Month</md-radio-button>
+            </md-radio-group>
+        </div>
+    </div>
+
+
+    <div class="row" align="center">
+        <div class="score-chart">
+            <chart data="scoreChart" type-chart="score"></chart>
+        </div>
+        <div class="recurrence-chart">
+            <chart data="recurrenceChart" type-chart="recurrence"></chart>
+        </div>
+    </div>
+
 </div>
 
-<div class="row buttons">
-    <button type="button" ng-class="num == 180 ? 'btn btn-default focus' : 'btn btn-default' " ng-click="updatePag(180)">6 Months</button>
-    <button type="button" ng-class="num == 90 ? 'btn btn-default focus' : 'btn btn-default' " ng-click="updatePag(90)">3 Months</button>
-    <button type="button" ng-class="num == 30 ? 'btn btn-default focus' : 'btn btn-default' " ng-click="updatePag(30)">1 Month</button>
-</div>
 
-<div class="row" align="center">
-    <div class="scoreChart">
-        <chart data="scoreChart" style="min-width: 1000px; height: 400px; margin: 0 auto"> Placeholder for generic chart</chart>
-    </div>
-    <div class="recurrenceChart">
-        <chart data="recurrenceChart" style="min-width: 1000px; height: 400px; margin: 0 auto"> Placeholder for generic chart</chart>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

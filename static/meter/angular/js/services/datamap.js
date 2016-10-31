@@ -2,18 +2,18 @@
 // Factory used to get the json data for the map chart
 
 
-app.factory('datamap', function($http) {
+app.factory('datamap', function ($http) {
 
-	return {
+	return{
+		
+	  	getData: function (word) {
+	  		
+	  		return $http.get(encodeURIComponent('api/'+word+'/map')).success(function(data) { 
+	            return data; 
+	        }).error(function(err) { 
+	            return err; 
+	        }); 
 
-		getData: function(word) {
-
-			return $http.get(encodeURIComponent('api/' + word + '/map')).success(function(data) {
-				return data;
-			}).error(function(err) {
-				return err;
-			});
-
-		}
+	  	}
 	}
 });

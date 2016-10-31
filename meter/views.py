@@ -1,29 +1,29 @@
+import json, os, random, string, redis, urllib
+
+from collections import OrderedDict
+
+
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect 
 from django.core.urlresolvers import reverse_lazy
-
 from django.http import Http404, JsonResponse
-
-import json
-
-
 from django.http import HttpResponse
-
 from django.views import generic
 from django.views.generic import View 
-
 from django.db.models import Q
-
-from jenks import jenks #Used to aply jenks algorithm to the mapdata
-
-import os, random, string, redis
+from django.core import serializers
 
 
 from .serializers import StateSerializer, WordSerializer
 from .models import Word, State, Date
 
-from django.core import serializers
 
-import urllib
+from jenks import jenks #Used to aply jenks algorithm to the mapdata
+
+
+
+
+
+
 
 ####################################################
 #################### CUSTOM API ####################
@@ -32,9 +32,9 @@ import urllib
 
 
 # RETURN A JSON WITH ALL THE AVAILABLE WORDS/HASHTAGS/USERS
-def WordsJson(request):
+def WordSearchJson(request, word):
 
-	words = Word.objects.all()
+	words = Word.objects.filter(word__startswith=word).order_by('-recurrence')
 	words_list = list()
 
 	for word in words:
@@ -80,14 +80,14 @@ def StatesJson(request, word):
 
 		states_dict[state.state] = {"fillKey": fillKey, "score": state.score,"recurrence": state.recurrence}
 
+	states_dict = OrderedDict(sorted(states_dict.items(), key=lambda x: x[1]['score'], reverse=True))
 
 	return HttpResponse(json.dumps(states_dict))
-
 
 ######################################################################
 
 # RETURN A JSON WITH THE SCORE CHART DATA
-def ScoreChartJson(request, word, state, num):
+def ScoreChartJson(request, word, state):
 
 	word = urllib.unquote(word);
 	
@@ -99,16 +99,8 @@ def ScoreChartJson(request, word, state, num):
 	else:
 		dates = Date.objects.filter(state__state=state).filter(state__word__word=word)
 
-	num = int(num)
 	first = 0
-	
-	if num <= 1:
-		last = 30 
-	elif num == 2:
-		last = 60
-	else:
-		last = len(dates)
-
+	last = len(dates)
 
 	dates = reversed(dates[first:last])
 
@@ -119,11 +111,12 @@ def ScoreChartJson(request, word, state, num):
 
 	chart_dict = dict()
 
+
+	chart_dict['xAxis'] = {'categories' : state_xAxis}
 	if(state=='overall'):
-		chart_dict['xAxis'] = {'categories' : state_xAxis}
 		chart_dict['series'] = ({'name' : 'Overall', 'data' : state_score , 'color' : '#008cba'})
 	else:
-		chart_dict['series'] = ({'name' : state, 'data' : state_score})
+		chart_dict['series'] = ({'name' : state, 'data' : state_score, 'color' : '#008cba'})
 
 
 	return HttpResponse(json.dumps(chart_dict))
@@ -132,7 +125,7 @@ def ScoreChartJson(request, word, state, num):
 ######################################################################
 
 #RETURN A JSON WITH THE RECURRENCE CHART DATA
-def RecurrenceChartJson(request, word, state, num):
+def RecurrenceChartJson(request, word, state):
 
 	word = urllib.unquote(word);
 	
@@ -144,15 +137,8 @@ def RecurrenceChartJson(request, word, state, num):
 	else:
 		dates = Date.objects.filter(state__state=state).filter(state__word__word=word)
 
-	num = int(num)
 	first = 0
-	
-	if num <= 1:
-		last = 30 
-	elif num == 2:
-		last = 60
-	else:
-		last = len(dates)
+	last = len(dates)
 
 	dates = reversed(dates[first:last])
 
@@ -164,14 +150,15 @@ def RecurrenceChartJson(request, word, state, num):
 
 	chart_dict = dict()
 
+	chart_dict['xAxis'] = {'categories' : state_xAxis}
 	if(state=='overall'):
-		chart_dict['xAxis'] = {'categories' : state_xAxis}
 		chart_dict['series'] = ({'name' : 'Overall', 'data' : state_recurrence, 'color' : '#008cba'})
 	else:
-		chart_dict['series'] = ({'name' : state, 'data' : state_recurrence})
+		chart_dict['series'] = ({'name' : state, 'data' : state_recurrence, 'color' : '#008cba'})
 
 
 	return HttpResponse(json.dumps(chart_dict))
+
 
 
 ######################################################################

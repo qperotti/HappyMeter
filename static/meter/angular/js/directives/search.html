@@ -1,31 +1,31 @@
-<div layout="column" ng-cloak="" class="autocompletedemoBasicUsage" ng-app="MyApp">
-  <md-content class="md-padding">
+
+<div ng-class="location === 'home' ? '' : 'search-navbar-box' ">
+
     <form ng-submit="$event.preventDefault()" name="searchForm">
-      <md-autocomplete 
-        md-input-name="autocompleteField"
-        ng-disabled="ctrl.isDisabled" 
-        md-no-cache="ctrl.noCache" 
-        md-selected-item="ctrl.selectedItem" 
-        md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" 
-        md-select-on-match="false" 
-        md-search-text="ctrl.searchText" 
-        md-selected-item-change="ctrl.selectedItemChange(item)" 
-        md-items="item in ctrl.querySearch(ctrl.searchText)" 
-        md-item-text="item.display" 
-        md-min-length="3" 
-        placeholder="Search for @users, #hashtags or words"
-        md-autoselect="true" >
-        <md-item-template>
-          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
-        </md-item-template>
-        <md-not-found>
-          No matches found for <span style="color:red;font-weight:bold">"{{ctrl.searchText}}"</span>.
-        </md-not-found>
-      </md-autocomplete>
-      <br><br>
-      <div class="row" align="center">
-        <md-button class="md-raised"  ng-disabled="!ctrl.selectedItem" ng-click="ctrl.submitForm(ctrl.selectedItem)">Search</md-button>
-      </div>
-    </form>
-  </md-content>
+           <md-autocomplete 
+           md-input-name="autocompleteField"
+           ng-disabled="ctrl.isDisabled" 
+           md-no-cache="ctrl.noCache" 
+           md-selected-item="ctrl.selectedItem" 
+           md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" 
+           md-select-on-match="false" 
+           md-search-text="ctrl.searchText" 
+           md-selected-item-change="ctrl.selectedItemChange(item)" 
+           md-items="item in ctrl.querySearch(ctrl.searchText)" 
+           md-item-text="item.display" 
+           md-min-length="3" 
+           placeholder="{{message}}"
+           md-autoselect="true">
+                <md-item-template>
+                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                </md-item-template>
+                <md-not-found>
+                     No matches found for <span style="color:red;font-weight:bold">"{{ctrl.searchText}}"</span>.
+                </md-not-found>
+           </md-autocomplete>
+      </form>
 </div>
+ <div ng-class="location === 'home' ? 'search-home-button' : 'search-navbar-button' ">
+    <md-button aria-hidden="true" class="md-raised"  ng-disabled="!ctrl.selectedItem" ng-click="ctrl.submitForm(ctrl.selectedItem)"><i class="fa fa-search" aria-hidden="true" ></i></md-button>
+</div>
+

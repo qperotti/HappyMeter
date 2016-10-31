@@ -1,0 +1,71 @@
+        
+
+<div ng-repeat="state in rankingData " ng-if="$index % 6 == 0" class="row">
+    <!-- purria de botones acortada -->
+    <div class="col-lg-2  col-sm-4 col-xs-6">
+      <div class="state-rank-column">
+        <p ng-if="rankingData.length > ($index)"><span ng-class="{
+          'badge positive': rankingData[$index].fillKey == 'positive',
+          'badge neutral': rankingData[$index].fillKey == 'neutral',
+          'badge negative': rankingData[$index].fillKey == 'negative'}"> 
+          {{$index+1}}</span> {{rankingData[$index].name}}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-4 col-xs-6">
+      <div class="state-rank-column">
+        <p ng-if="rankingData.length > ($index+1)"><span ng-class="{
+          'badge positive': rankingData[$index+1].fillKey == 'positive',
+          'badge neutral': rankingData[$index+1].fillKey == 'neutral',
+          'badge negative': rankingData[$index+1].fillKey == 'negative'}"> 
+          {{$index+2}}</span> {{rankingData[$index + 1].name}}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-4 col-xs-6">
+      <div class="state-rank-column">
+        <p ng-if="rankingData.length > ($index+2)"><span ng-class="{
+          'badge positive': rankingData[$index+2].fillKey == 'positive',
+          'badge neutral': rankingData[$index+2].fillKey == 'neutral',
+          'badge negative': rankingData[$index+2].fillKey == 'negative'}"> 
+          {{$index+3}}</span> {{rankingData[$index + 2].name}}
+          </p>
+        </div>
+    </div> 
+
+    <div class="col-lg-2 col-sm-4 col-xs-6">
+      <div class="state-rank-column">
+        <p ng-if="rankingData.length > ($index+3)"><span ng-class="{
+          'badge positive': rankingData[$index+3].fillKey == 'positive',
+          'badge neutral': rankingData[$index+3].fillKey == 'neutral',
+          'badge negative': rankingData[$index+3].fillKey == 'negative'}">  
+          {{$index+4}}</span> {{rankingData[$index + 3].name}}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-4 col-xs-6">
+      <div class="state-rank-column">
+        <p ng-if="rankingData.length > ($index+4)"><span ng-class="{
+          'badge positive': rankingData[$index+4].fillKey == 'positive',
+          'badge neutral': rankingData[$index+4].fillKey == 'neutral',
+          'badge negative': rankingData[$index+4].fillKey == 'negative'}"> 
+          {{$index+5}}</span> {{rankingData[$index + 4].name}}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-4 col-xs-6">
+      <div class="state-rank-column">
+        <p ng-if="rankingData.length > ($index+5)"><span ng-class="{
+          'badge positive': rankingData[$index+5].fillKey == 'positive',
+          'badge neutral': rankingData[$index+5].fillKey == 'neutral',
+          'badge negative': rankingData[$index+5].fillKey == 'negative'}"> 
+          {{$index+5}}</span> {{rankingData[$index + 5].name}}
+        </p>
+      </div>
+    </div>
+</div>
+
